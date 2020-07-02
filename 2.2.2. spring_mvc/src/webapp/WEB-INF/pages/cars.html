@@ -3,10 +3,10 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{title}"></title>
+    <title th:text="${title}"></title>
 </head>
 <body>
-<h1 th:text="#{title}">Cars</h1>
+<h1 th:text="${title}">Cars</h1>
 <div>
     <th:block th:each="msg : ${car}">
         <h1 th:text="${msg}"></h1>

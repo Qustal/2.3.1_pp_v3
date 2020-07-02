@@ -1,22 +1,26 @@
 package web.controller;
 
 import model.Car;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import service.CarService;
 
 @Controller
 public class CarController {
 
     @GetMapping(value = "/cars")
-    public String printCars(ModelMap modelMap) {
-        if (CarService.getInstance().getCarList() == null)
+    public String printCars(ModelMap modelMap, @RequestParam(value = "locale") @Nullable String locale) {
+
+        if (CarService.getInstance().getCarList() == null) {
             modelMap.addAttribute("car", "car quantity is not enough");
-        else
+        } else
             modelMap.addAttribute("car", CarService.getInstance().getCarList());
+        if (locale != null) {
+            if (locale.equals("en")) modelMap.addAttribute("title", "CARS");
+            else if (locale.equals("ru")) modelMap.addAttribute("title", "МАШИНЫ");
+        }
         return "cars";
     }
 
